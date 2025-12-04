@@ -22,6 +22,7 @@ dist/
 firebase-debug.log
 firestore-debug.log
 .firebase/
+serviceAccountKey.json
 
 # IDE
 .vscode/
@@ -38,3 +39,4 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+postman_collection.json
