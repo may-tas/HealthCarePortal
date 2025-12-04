@@ -1,17 +1,16 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
 });
 
-// Request interceptor
+// Request interceptor - Add auth token to all requests
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Here you could add the auth token to headers
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
@@ -19,16 +18,17 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response interceptor
+// Response interceptor - Handle common errors
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // Here you could handle global errors, e.g. 401 unauthorized
-    // if (error.response && error.response.status === 401) {
-    //   // handle unauthorized error, e.g. redirect to login
-    // }
+    if (error.response && error.response.status === 401) {
+      // Token expired or invalid - redirect to login
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
     return Promise.reject(error);
   }
 );
