@@ -31,9 +31,9 @@ The application follows a modern three-tier architecture with clear separation o
 │  - Firebase Client SDK                                  │
 │  - Auth Context (manages user state)                    │
 └─────────────────────────────────────────────────────────┘
-          │                              │
-          │                              │
-          ▼                              ▼
+                                         │
+                                         │
+                                         ▼
 ┌──────────────────────┐    ┌──────────────────────────┐
 │  FIREBASE AUTH       │    │  EXPRESS.JS BACKEND      │
 │  (Firebase)          │    │  (Railway)               │
