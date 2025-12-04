@@ -46,16 +46,16 @@ app.post('/api/auth/logout', authMiddleware, authController.logout);
 app.get('/api/auth/verify', authMiddleware, authController.verify);
 
 // Patient routes (protected, patient role only)
-app.get('/api/patients/profile', authMiddleware, roleMiddleware(['patient']), patientController.getProfile);
-app.put('/api/patients/profile', authMiddleware, roleMiddleware(['patient']), patientController.updateProfile);
-app.get('/api/patients/dashboard', authMiddleware, roleMiddleware(['patient']), patientController.getDashboard);
-app.post('/api/patients/goals', authMiddleware, roleMiddleware(['patient']), patientController.logGoal);
-app.get('/api/patients/goals', authMiddleware, roleMiddleware(['patient']), patientController.getGoals);
+app.get('/api/patient/profile', authMiddleware, roleMiddleware(['patient']), patientController.getProfile);
+app.put('/api/patient/profile', authMiddleware, roleMiddleware(['patient']), patientController.updateProfile);
+app.get('/api/patient/dashboard', authMiddleware, roleMiddleware(['patient']), patientController.getDashboard);
+app.post('/api/patient/goals/log', authMiddleware, roleMiddleware(['patient']), patientController.logGoal);
+app.get('/api/patient/goals', authMiddleware, roleMiddleware(['patient']), patientController.getGoals);
 
 // Provider routes (protected, provider role only)
-app.get('/api/providers/patients', authMiddleware, roleMiddleware(['provider']), providerController.getPatients);
-app.get('/api/providers/patients/:id', authMiddleware, roleMiddleware(['provider']), providerController.getPatientDetails);
-app.get('/api/providers/compliance', authMiddleware, roleMiddleware(['provider']), providerController.getCompliance);
+app.get('/api/provider/patients', authMiddleware, roleMiddleware(['provider']), providerController.getPatients);
+app.get('/api/provider/patients/:id', authMiddleware, roleMiddleware(['provider']), providerController.getPatientDetails);
+app.get('/api/provider/compliance', authMiddleware, roleMiddleware(['provider']), providerController.getCompliance);
 
 // Error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
