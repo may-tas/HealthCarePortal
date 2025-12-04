@@ -1,0 +1,78 @@
+.compliance-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-icon {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-label {
+  line-height: 1;
+}
+
+.last-checkup {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-left: 4px;
+}
+
+/* Compliant Status */
+.compliance-status.compliant {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.compliance-status.compliant .status-icon {
+  background-color: #28a745;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+/* At Risk Status */
+.compliance-status.at-risk {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.compliance-status.at-risk .status-icon {
+  color: #f39c12;
+}
+
+/* Overdue Status */
+.compliance-status.overdue {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.compliance-status.overdue .status-icon {
+  background-color: #dc3545;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+/* Unknown Status */
+.compliance-status.unknown {
+  background-color: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
