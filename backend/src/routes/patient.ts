@@ -89,25 +89,29 @@ export const getDashboard = async (req: Request, res: Response): Promise<void> =
 
     const goals = goalsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-    // Get upcoming reminders
+    // Get upcoming reminders (simplified query to avoid index requirement)
     const remindersSnapshot = await db()
       .collection('reminders')
       .where('userId', '==', req.user.uid)
-      .where('status', '==', 'upcoming')
-      .orderBy('dueDate', 'asc')
       .limit(5)
       .get();
 
-    const reminders = remindersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Filter and sort in memory to avoid composite index
+    const reminders = remindersSnapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() as any }))
+      .filter(reminder => reminder.status === 'upcoming')
+      .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
 
-    // Get random health tip
+    // Get random health tip (limit to prevent large queries)
     const tipsSnapshot = await db()
       .collection('health_tips')
-      .where('isActive', '==', true)
       .limit(10)
       .get();
 
-    const tips = tipsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Filter active tips in memory and pick random one
+    const tips = tipsSnapshot.docs
+      .map(doc => ({ id: doc.id, ...doc.data() as any }))
+      .filter(tip => tip.isActive !== false); // Include if isActive is undefined or true
     const randomTip = tips.length > 0 ? tips[Math.floor(Math.random() * tips.length)] : null;
 
     res.status(200).json({
